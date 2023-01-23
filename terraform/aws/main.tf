@@ -16,6 +16,7 @@ provider "aws" {
 
 resource "aws_instance" "web_host" {
   ami           = "${var.ami}"
+  
   instance_type = "t2.nano"
 
   user_data = <<EOF
@@ -35,12 +36,14 @@ EOF
 
 resource "aws_ebs_volume" "ebs-web-storage" {
   availability_zone = "${var.region}a"
+
   size              = 40
 }
 
 
 resource "aws_s3_bucket" "test_bucket" {
   bucket        = "my-test-bucket"
+
   force_destroy = true
   acl = "public-read"
 }
