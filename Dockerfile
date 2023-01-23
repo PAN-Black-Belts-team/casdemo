@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:16-alpine
 ENV NODE_ENV "production"
 ENV PORT 8079
 EXPOSE 8079
