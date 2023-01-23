@@ -1,19 +1,28 @@
-FROM node
-ENV NODE_ENV "production"
-ENV PORT 8079
-EXPOSE 8079
-RUN addgroup mygroup && adduser -D -G mygroup myuser && mkdir -p /usr/src/app && chown -R myuser /usr/src/app
+FROM ubuntu:jammy-20221020
 
-# Prepare app directory
-WORKDIR /usr/src/app
-COPY package.json /usr/src/app/
-COPY yarn.lock /usr/src/app/
-RUN chown myuser /usr/src/app/yarn.lock
+# Disable Prompt During Packages Installation
+ARG DEBIAN_FRONTEND=noninteractive
 
-USER myuser
-RUN yarn install
+# Update Ubuntu Software repository
+RUN apt update
 
-COPY . /usr/src/app
+# Install nginx, php-fpm and supervisord from ubuntu repository
+RUN apt install -y nginx php-fpm supervisor && \
+    rm -rf /var/lib/apt/lists/* && \
+    apt clean
 
-# Start the app
-CMD ["/usr/local/bin/npm", "start"]
+# Define the ENV variable
+ENV nginx_vhost /etc/nginx/sites-available/default
+ENV php_conf /etc/php/7.4/fpm/php.ini
+ENV nginx_conf /etc/nginx/nginx.conf
+ENV supervisor_conf /etc/supervisor/supervisord.conf
+
+RUN mkdir -p /run/php && \
+    chown -R www-data:www-data /var/www/html && \
+    chown -R www-data:www-data /run/php
+
+# Volume configuration
+VOLUME ["/etc/nginx/sites-enabled", "/etc/nginx/certs", "/etc/nginx/conf.d", "/var/log/nginx", "/var/www/html"]
+
+# Expose Port for the Application
+EXPOSE 80 443
