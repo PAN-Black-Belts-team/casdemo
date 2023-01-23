@@ -44,3 +44,11 @@ resource "aws_s3_bucket" "test_bucket" {
   force_destroy = true
   acl = "public-read"
 }
+
+resource "aws_s3_bucket_versioning" "test_bucket" {
+  bucket = aws_s3_bucket.test_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
