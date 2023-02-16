@@ -10,8 +10,7 @@ on:
 
 jobs:
   checkov-job:
-    permissions:
-      contents: write
+    permissions: write-all
     runs-on: ubuntu-latest
     name: checkov-action
     env:
