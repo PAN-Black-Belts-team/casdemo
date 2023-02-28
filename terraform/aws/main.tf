@@ -36,6 +36,7 @@ EOF
 resource "aws_ebs_volume" "ebs-web-storage" {
   availability_zone = "${var.region}a"
   size              = 40
+  encrypted = true
 }
 
 
