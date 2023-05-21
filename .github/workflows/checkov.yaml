@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: checkov-action
     env:
-      PRISMA_API_URL: https://api2.prismacloud.io
+      PRISMA_API_URL: https://api2.eu.prismacloud.io/
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
@@ -25,7 +25,7 @@ jobs:
         with:
           directory: '.'
           soft_fail: true
-          api-key: 362f773c-a46c-4634-9786-1a35fbf9f8c1::KgHCdrsNaQ16IPdGGKF0uG9A9e0=
+          api-key: ${{ secrets.BC_API_KEY }}
       - name: Expose report
         uses: actions/upload-artifact@v3
         with:
