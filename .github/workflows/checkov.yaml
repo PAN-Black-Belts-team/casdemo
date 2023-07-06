@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     name: checkov-action
     env:
-      PRISMA_API_URL: https://api2.eu.prismacloud.io/
+      PRISMA_API_URL: https://api4.prismacloud.io/
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
