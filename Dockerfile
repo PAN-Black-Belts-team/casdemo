@@ -4,7 +4,7 @@ ENV PORT 8079
 EXPOSE 8079
 RUN addgroup mygroup && adduser -D -G mygroup myuser && mkdir -p /usr/src/app && chown -R myuser /usr/src/app
 
-# Prepare app directory
+# Prepare app directory1
 WORKDIR /usr/src/app
 COPY package.json /usr/src/app/
 COPY yarn.lock /usr/src/app/
